@@ -1,6 +1,8 @@
+//next.config.mjs
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
+  allowedDevOrigins: ['127.0.0.1', '*.app.github.dev'],
   experimental: {
     agentFeedback: true,
   },
