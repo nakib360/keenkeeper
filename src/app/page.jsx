@@ -1,9 +1,7 @@
+import { redirect } from "next/navigation";
+
 const ComponentName = () => {
-  return (
-    <div>
-      
-    </div>
-  );
+  return redirect("/Home");
 };
 
 export default ComponentName;
