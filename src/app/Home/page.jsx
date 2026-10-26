@@ -41,7 +41,7 @@ const Home = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {
             FriendsData.map(friend => (
-              <Link href={`/${friend.id}`} key={friend.id} className="bg-white p-5 rounded-xl shadow flex flex-col justify-center items-center gap-2"> 
+              <Link href={`/Home/${friend.id}`} key={friend.id} className="bg-white p-5 rounded-xl shadow flex flex-col justify-center items-center gap-2"> 
                 <Image className="rounded-full" height={80} width={80} src={friend.picture} alt={friend.name}/>
                 <p className="font-bold">{friend.name}</p>
                 <p className="text-sm text-gray-500">{friend.days_since_contact}d ago</p>
