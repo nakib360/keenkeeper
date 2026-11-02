@@ -117,7 +117,7 @@ const UsersDetails = async ({ params }) => {
           </p>
         </div>
 
-        <QuickCheckIn/>
+        <QuickCheckIn userName={user?.name}/>
       </div>
     </div>
   );

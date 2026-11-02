@@ -1,28 +1,22 @@
 "use client"
 
-import { Handshake } from "lucide-react";
-import { useState } from "react";
+import { Phone, MessageSquare, Video } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const TimeLine = () => {
   const [sortCondition, setSortCondition] = useState("All");
+  const [history, setHistory] = useState([]);
+  const conditionalIcon = {
+    Call: Phone,
+    Text: MessageSquare,
+    Video: Video
+  }
 
-  const timeline = [
-    {
-      medium: "Call",
-      name: "Nila",
-      date: "March 29, 2026"
-    },
-    {
-      medium: "Text",
-      name: "Nila",
-      date: "March 29, 2026"
-    },
-    {
-      medium: "Video",
-      name: "Nila",
-      date: "March 29, 2026"
-    },
-  ]
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("timelineHistory") || "[]");
+    const sortedData = sortCondition === "All" ? data : data.filter(i => i.medium === sortCondition);
+    setHistory(sortedData);
+  }, [sortCondition]);
 
   const handleFilter = e => {
     setSortCondition(e.target.value);
@@ -45,25 +39,34 @@ const TimeLine = () => {
       </div>
 
       {/* History */}
-      <div className="flex items-center gap-3 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 shadow-sm">
-        <div className="shrink-0">
-          <Handshake
-            size={28}
-            strokeWidth={2.5}
-            className="text-black fill-yellow-400"
-          />
-        </div>
+      {
+        history.length === 0 ? <div className="text-center py-10 text-gray-400">No Timeline found </div> : history?.map((his, idx) => {
+          const Icon = conditionalIcon[his.medium];
 
-        <div className="flex flex-col">
-          <p className="text-sm font-medium text-gray-800">
-            Meetup <span className="ml-1 font-normal text-slate-500">with Tom Baker</span>
-          </p>
+          return (
+            <div key={idx} className="flex items-center gap-3 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 shadow-sm">
+              <div className="shrink-0">
+                <Icon
+                  size={28}
+                  strokeWidth={2.5}
+                  className="text-black fill-gray-200"
+                />
 
-          <span className="text-xs text-slate-500">
-            March 29, 2026
-          </span>
-        </div>
-      </div>
+              </div>
+
+              <div className="flex flex-col">
+                <p className="text-sm font-medium text-gray-800">
+                  {his.medium} <span className="ml-1 font-normal text-slate-500">with {his.name}</span>
+                </p>
+
+                <span className="text-xs text-slate-500">
+                  {his.date}
+                </span>
+              </div>
+            </div>
+          )
+        })
+      }
 
     </div>
   );
